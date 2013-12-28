@@ -1,0 +1,31 @@
+{
+  "name": "string-calculator",
+  "version": "0.0.0",
+  "description": "A refactoring kata in JS",
+  "main": "SpecRunner.html",
+  "scripts": {
+    "test": "node_modules/.bin/karma start karma.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ThibWeb/string-calculator.git"
+  },
+  "keywords": [
+    "codingdojo",
+    "kata",
+    "refactoring",
+    "javascript",
+    "jasmine",
+    "istanbul",
+    "tdd"
+  ],
+  "author": "ThibWeb",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/ThibWeb/string-calculator/issues"
+  },
+  "devDependencies": {
+    "karma": "~0.10.2",
+    "karma-coverage": "~0.1.0"
+  }
+}
