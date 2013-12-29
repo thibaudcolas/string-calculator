@@ -7,16 +7,16 @@ StringCalculator.prototype.add = function (numbers) {
   var operands;
   var negatives = '';
   var sum = 0;
-  var delimiters = '\n,';
+  var delimiters = '\n|,';
 
   // If there are custom delimiters, process them.
   if (numbers.indexOf('//') === 0) {
-    delimiters += numbers.substring(2, numbers.indexOf('\n'));
+    delimiters += '|' + numbers.substring(2, numbers.indexOf('\n'));
     numbers = numbers.substring(numbers.indexOf('\n'));
   }
 
   // Separate numbers using the delimiters.
-  operands = numbers.split(new RegExp('[' + delimiters + ']'));
+  operands = numbers.split(new RegExp('(' + delimiters + ')'));
 
   // Calculates the sum of all the numbers.
   sum = operands.reduce(function (acc, num) {
