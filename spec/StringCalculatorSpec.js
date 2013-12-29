@@ -14,4 +14,10 @@ describe('String Calculator', function () {
     expect(calc.add('1')).toEqual(1);
     expect(calc.add('-41')).toEqual(-41);
   });
+
+  it('handles binary addition', function () {
+    expect(calc.add('133,36')).toEqual(169);
+    expect(calc.add('1,2')).toEqual(3);
+    expect(calc.add('-41,50')).toEqual(9);
+  });
 });
