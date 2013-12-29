@@ -1,31 +1,40 @@
 var StringCalculator = function () {
-
+  this.defaultDelimiters = '\n|,';
+  this.maximumNumber = 1000;
 };
 
-// The add method, takes a string of numbers.
-StringCalculator.prototype.add = function (numbers) {
-  var operands;
-  var negatives = '';
-  var sum = 0;
-  var delimiters = '\n|,';
+/*
+ * Parses the string to return an array of operands.
+ */
+StringCalculator.prototype.parseNumbers = function (str) {
+  var delimiters = this.defaultDelimiters;
 
   // If there are custom delimiters, process them.
-  if (numbers.indexOf('//') === 0) {
-    delimiters += '|' + numbers.substring(2, numbers.indexOf('\n'));
-    numbers = numbers.substring(numbers.indexOf('\n'));
+  if (str.indexOf('//') === 0) {
+    delimiters += '|' + str.substring(2, str.indexOf('\n'));
+    str = str.substring(str.indexOf('\n'));
   }
 
+  return str.split(new RegExp('(' + delimiters + ')'));
+}
+
+/*
+ * The add method, takes a string of numbers.
+ */
+StringCalculator.prototype.add = function (str) {
+  var self = this;
   // Separate numbers using the delimiters.
-  operands = numbers.split(new RegExp('(' + delimiters + ')'));
+  var operands = self.parseNumbers(str);
+  var negatives = '';
 
   // Calculates the sum of all the numbers.
-  sum = operands.reduce(function (acc, num) {
+  var sum = operands.reduce(function (acc, num) {
     var num = Number(num);
 
     if (num < 0) negatives += ' ' + num;
 
-    return acc + (num < 1000 ? num : 0);
-  }, sum);
+    return acc + (num < self.maximumNumber ? num : 0);
+  }, 0);
 
   // Negative numbers are reported.
   if (negatives.length > 0) {
