@@ -20,4 +20,10 @@ describe('String Calculator', function () {
     expect(calc.add('1,2')).toEqual(3);
     expect(calc.add('-41,50')).toEqual(9);
   });
+
+  it('handles addition w/ an infinite number of operands', function () {
+    expect(calc.add('133,36,1,3,5')).toEqual(178);
+    expect(calc.add('1,2,90,100,1000,10000,100000')).toEqual(111193);
+    expect(calc.add('-41,50,-20,-30')).toEqual(-41);
+  });
 });
