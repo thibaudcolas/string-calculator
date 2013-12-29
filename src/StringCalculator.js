@@ -1,46 +1,53 @@
-var StringCalculator = function () {
-  this.defaultDelimiters = '\n|,';
-  this.maximumNumber = 1000;
+/*
+ * The Calculator object.
+ */
+var StringCalculator = function (delimiters) {
+  this.defaultDelimiters = delimiters ? delimiters : '\n|,';
 };
 
+/*
+ * Useful when dynamically generating regular expressions.
+ */
 String.prototype.escapeRegExp = function () {
-  return this.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-}
+  return this.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+};
+
+StringCalculator.prototype._parseDelimiters = function (custom) {
+  var delimiters = '|' + custom;
+
+  // Override default value if we are in a multiple-delimiter case.
+  if (custom.indexOf('[') === 0) {
+    custom = custom.split('[').slice(1);
+    // Retrieve all delimiters and add them to the regex.
+    delimiters = custom.reduce(function (acc, d) {
+      return acc += '|' + d.substring(0, d.length - 1).escapeRegExp();
+    }, '');
+  }
+
+  return delimiters;
+};
 
 /*
  * Parses the string to return an array of operands.
  */
-StringCalculator.prototype.parseNumbers = function (str) {
+StringCalculator.prototype._parseNumbers = function (str) {
   var delimiters = this.defaultDelimiters;
-  var customDelimiters;
 
   // If there are custom delimiters, process them.
   if (str.indexOf('//') === 0) {
-    customDelimiters = str.substring(2, str.indexOf('\n'))
-
-    if (customDelimiters.indexOf('[') === 0) {
-      customDelimiters = customDelimiters.split('[').slice(1);
-      delimiters += customDelimiters.reduce(function (acc, delim) {
-        return acc += '|' + delim.substring(0, delim.length - 1).escapeRegExp();
-      }, '');
-    }
-    else {
-      delimiters += '|' + customDelimiters;
-    }
-
+    delimiters += this._parseDelimiters(str.substring(2, str.indexOf('\n')));
     str = str.substring(str.indexOf('\n'));
   }
 
   return str.split(new RegExp('(' + delimiters + ')'));
-}
+};
 
 /*
  * The add method, takes a string of numbers.
  */
-StringCalculator.prototype.add = function (str) {
-  var self = this;
+StringCalculator.prototype.add = function (numbers) {
   // Separate numbers using the delimiters.
-  var operands = self.parseNumbers(str);
+  var operands = this._parseNumbers(numbers);
   var negatives = '';
 
   // Calculates the sum of all the numbers.
@@ -49,7 +56,7 @@ StringCalculator.prototype.add = function (str) {
 
     if (num < 0) negatives += ' ' + num;
 
-    return acc + (num < self.maximumNumber ? num : 0);
+    return acc + (num < 1000 ? num : 0);
   }, 0);
 
   // Negative numbers are reported.
