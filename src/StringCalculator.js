@@ -3,15 +3,31 @@ var StringCalculator = function () {
   this.maximumNumber = 1000;
 };
 
+String.prototype.escapeRegExp = function () {
+  return this.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+}
+
 /*
  * Parses the string to return an array of operands.
  */
 StringCalculator.prototype.parseNumbers = function (str) {
   var delimiters = this.defaultDelimiters;
+  var customDelimiters;
 
   // If there are custom delimiters, process them.
   if (str.indexOf('//') === 0) {
-    delimiters += '|' + str.substring(2, str.indexOf('\n'));
+    customDelimiters = str.substring(2, str.indexOf('\n'))
+
+    if (customDelimiters.indexOf('[') === 0) {
+      customDelimiters = customDelimiters.split('[').slice(1);
+      delimiters += customDelimiters.reduce(function (acc, delim) {
+        return acc += '|' + delim.substring(0, delim.length - 1).escapeRegExp();
+      }, '');
+    }
+    else {
+      delimiters += '|' + customDelimiters;
+    }
+
     str = str.substring(str.indexOf('\n'));
   }
 
@@ -29,7 +45,7 @@ StringCalculator.prototype.add = function (str) {
 
   // Calculates the sum of all the numbers.
   var sum = operands.reduce(function (acc, num) {
-    var num = Number(num);
+    num = Number(num);
 
     if (num < 0) negatives += ' ' + num;
 
