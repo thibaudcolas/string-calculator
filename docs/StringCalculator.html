@@ -30,6 +30,151 @@
               
             </div>
             
+            <div class="content"><div class='highlight'><pre><span class="comment">/*
+ * The Calculator object.
+ */</span>
+<span class="keyword">var</span> StringCalculator = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+  <span class="keyword">this</span>.defaultDelimiters = <span class="string">'\n|,'</span>;
+};
+
+<span class="comment">/*
+ * Useful when dynamically generating regular expressions.
+ */</span>
+String.prototype.escapeRegExp = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+  <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g</span>, <span class="string">'\\$&amp;'</span>);
+};
+
+StringCalculator.prototype._parseDelimiters = <span class="function"><span class="keyword">function</span> <span class="params">(custom)</span> {</span>
+  <span class="keyword">var</span> delimiters = <span class="string">'|'</span> + custom;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Override default value if we are in a multiple-delimiter case.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (custom.indexOf(<span class="string">'['</span>) === <span class="number">0</span>) {
+    custom = custom.split(<span class="string">'['</span>).slice(<span class="number">1</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Retrieve all delimiters and add them to the regex.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    delimiters = custom.reduce(<span class="function"><span class="keyword">function</span> <span class="params">(acc, d)</span> {</span>
+      <span class="keyword">return</span> acc += <span class="string">'|'</span> + d.substring(<span class="number">0</span>, d.length - <span class="number">1</span>).escapeRegExp();
+    }, <span class="string">''</span>);
+  }
+
+  <span class="keyword">return</span> delimiters;
+};
+
+<span class="comment">/*
+ * Parses the string to return an array of operands.
+ */</span>
+StringCalculator.prototype._parseNumbers = <span class="function"><span class="keyword">function</span> <span class="params">(str)</span> {</span>
+  <span class="keyword">var</span> delimiters = <span class="keyword">this</span>.defaultDelimiters;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>If there are custom delimiters, process them.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (str.indexOf(<span class="string">'//'</span>) === <span class="number">0</span>) {
+    delimiters += <span class="keyword">this</span>._parseDelimiters(str.substring(<span class="number">2</span>, str.indexOf(<span class="string">'\n'</span>)));
+    str = str.substring(str.indexOf(<span class="string">'\n'</span>));
+  }
+
+  <span class="keyword">return</span> str.split(<span class="keyword">new</span> RegExp(<span class="string">'('</span> + delimiters + <span class="string">')'</span>));
+};
+
+<span class="comment">/*
+ * The add method, takes a string of numbers.
+ */</span>
+StringCalculator.prototype.add = <span class="function"><span class="keyword">function</span> <span class="params">(numbers)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Separate numbers using the delimiters.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> operands = <span class="keyword">this</span>._parseNumbers(numbers);
+  <span class="keyword">var</span> negatives = <span class="string">''</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Calculates the sum of all the numbers.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> sum = operands.reduce(<span class="function"><span class="keyword">function</span> <span class="params">(acc, num)</span> {</span>
+    num = Number(num);
+
+    <span class="keyword">if</span> (num &lt; <span class="number">0</span>) {
+      negatives += <span class="string">' '</span> + num;
+    }
+
+    <span class="keyword">return</span> acc + (num &lt; <span class="number">1000</span> ? num : <span class="number">0</span>);
+  }, <span class="number">0</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Negative numbers are reported.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (negatives.length &gt; <span class="number">0</span>) {
+    <span class="keyword">throw</span> <span class="string">'negatives not allowed'</span> + negatives;
+  }
+
+  <span class="keyword">return</span> sum;
+};</pre></div></div>
+            
         </li>
         
     </ul>
