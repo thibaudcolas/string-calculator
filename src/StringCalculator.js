@@ -1,8 +1,8 @@
 /*
  * The Calculator object.
  */
-var StringCalculator = function (delimiters) {
-  this.defaultDelimiters = delimiters ? delimiters : '\n|,';
+var StringCalculator = function () {
+  this.defaultDelimiters = '\n|,';
 };
 
 /*
@@ -54,7 +54,9 @@ StringCalculator.prototype.add = function (numbers) {
   var sum = operands.reduce(function (acc, num) {
     num = Number(num);
 
-    if (num < 0) negatives += ' ' + num;
+    if (num < 0) {
+      negatives += ' ' + num;
+    }
 
     return acc + (num < 1000 ? num : 0);
   }, 0);
