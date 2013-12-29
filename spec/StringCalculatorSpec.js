@@ -1,8 +1,11 @@
 describe("String Calculator", function() {
+  var calc;
 
   beforeEach(function() {
+    calc = new StringCalculator();
   });
 
-  it("should do something", function() {
+  it("handles empty addition", function() {
+    expect(calc.add('')).toEqual(0);
   });
 });
