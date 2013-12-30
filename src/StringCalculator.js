@@ -58,7 +58,7 @@ StringCalculator.prototype.add = function (numbers) {
       negatives += ' ' + num;
     }
 
-    return acc + (num < 1000 ? num : 0);
+    return acc + (num <= 1000 ? num : 0);
   }, 0);
 
   // Negative numbers are reported.
