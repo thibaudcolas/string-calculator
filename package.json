@@ -4,7 +4,7 @@
   "description": "A refactoring kata in JS",
   "main": "SpecRunner.html",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start && exit 1"
   },
   "repository": {
     "type": "git",
