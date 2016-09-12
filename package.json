@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ThibWeb/string-calculator.git"
+    "url": "git://github.com/thibaudcolas/string-calculator.git"
   },
   "keywords": [
     "codingdojo",
@@ -19,10 +19,10 @@
     "istanbul",
     "tdd"
   ],
-  "author": "ThibWeb",
+  "author": "thibaudcolas",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/ThibWeb/string-calculator/issues"
+    "url": "https://github.com/thibaudcolas/string-calculator/issues"
   },
   "devDependencies": {
     "karma": "~0.10.2",

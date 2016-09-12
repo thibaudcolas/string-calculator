@@ -3,16 +3,16 @@ String Calculator
 
 > My solution to a TDD kata made by [Roy Osherove](http://osherove.com/tdd-kata-1/).
 
-[![Build Status](https://travis-ci.org/ThibWeb/string-calculator.png?branch=master)](https://travis-ci.org/ThibWeb/string-calculator)
+[![Build Status](https://travis-ci.org/thibaudcolas/string-calculator.png?branch=master)](https://travis-ci.org/thibaudcolas/string-calculator)
 
-[![Code Climate](https://codeclimate.com/github/ThibWeb/string-calculator.png)](https://codeclimate.com/github/ThibWeb/string-calculator)
+[![Code Climate](https://codeclimate.com/github/thibaudcolas/string-calculator.png)](https://codeclimate.com/github/thibaudcolas/string-calculator)
 
 Uses the [Jasmine](http://pivotal.github.io/jasmine/) (2.0.0) test framework.
 
 ## Setup
- 
+
 ```
-    git clone https://github.com/ThibWeb/string-calculator.git
+    git clone https://github.com/thibaudcolas/string-calculator.git
     cd string-calculator/
     npm install -g livereloadx
     server
