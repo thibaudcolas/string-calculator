@@ -7,7 +7,7 @@ String Calculator
 
 [![Code Climate](https://codeclimate.com/github/thibaudcolas/string-calculator.png)](https://codeclimate.com/github/thibaudcolas/string-calculator)
 
-Uses the [Jasmine](http://pivotal.github.io/jasmine/) (2.0.0) test framework.
+Uses the [Jasmine](https://jasmine.github.io/) (2.0.0) test framework.
 
 ## Setup
 
