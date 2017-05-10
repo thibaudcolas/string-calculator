@@ -1,6 +1,4 @@
-========================
-String Calculator Tâches
-========================
+# String Calculator
 
 - Créer une simple "String calculator" ayant une méthode `int Add(string numbers)`.
     + Cette méthode peut prendre 0, 1 ou 2 nombres, et retournera leur somme (pour une chaîne vide elle retournera 0) par exempl `""` ou `"1"` ou `"1,2"`.
